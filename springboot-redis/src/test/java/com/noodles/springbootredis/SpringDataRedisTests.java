@@ -1,18 +1,26 @@
 package com.noodles.springbootredis;
 
 
+import com.noodles.logback.MySlf4j;
 import com.noodles.springbootredis.bean.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.ScanResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
@@ -38,6 +46,41 @@ public class SpringDataRedisTests {
 
 	@Autowired
 	private RedisTemplate redisTemplate;
+
+
+	@Test
+	public void testKeyScan1(){
+
+	}
+
+	@Test
+	public void testKeyScan () throws Exception{
+
+		Long start = System.currentTimeMillis();
+
+		String realKey = "sas:appr:*";
+		try {
+			redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+				Set<String> binaryKeys = new HashSet<>();
+				Cursor<byte[]> cursor = connection.scan(new ScanOptions.ScanOptionsBuilder().match(realKey).count(100).build());
+				while (cursor.hasNext()) {
+					String key = new String(cursor.next());
+
+					Long expire = stringRedisTemplate.getExpire(key);
+
+					System.out.println("key=" + key + ",expire=" + expire);
+
+					//MySlf4j.textInfo("key={0},,expire={1}", key, expire);
+				}
+				return binaryKeys;
+			});
+
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("耗时(秒)：" + (System.currentTimeMillis() - start) / 1000);
+	}
 
 	@Test
 	public void setKey(){
