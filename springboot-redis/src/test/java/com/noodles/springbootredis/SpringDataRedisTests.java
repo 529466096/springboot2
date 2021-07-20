@@ -58,7 +58,7 @@ public class SpringDataRedisTests {
 
 		Long start = System.currentTimeMillis();
 
-		String realKey = "sas:appr:*";
+		String realKey = "{\"applId\":*_*";
 		try {
 			redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
 				Set<String> binaryKeys = new HashSet<>();
@@ -70,7 +70,7 @@ public class SpringDataRedisTests {
 
 					System.out.println("key=" + key + ",expire=" + expire);
 
-					//MySlf4j.textInfo("key={0},,expire={1}", key, expire);
+					//MySlf4j.textInfo("key={0},expire={1}", key, expire);
 				}
 				return binaryKeys;
 			});

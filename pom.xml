@@ -48,6 +48,7 @@
         <module>springboot-nettypool</module>
         <module>springboot-demos</module>
         <module>springboot-threadpool-starter</module>
+        <module>springboot-shardingsphere</module>
     </modules>
 
     <build>
