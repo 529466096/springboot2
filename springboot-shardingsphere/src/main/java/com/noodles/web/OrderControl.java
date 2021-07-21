@@ -3,6 +3,7 @@ package com.noodles.web;
 import io.swagger.annotations.Api;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +30,25 @@ public class OrderControl {
      */
     @PostMapping("/save")
     public void save(){
-        for(int i=0;i<10;i++){
+        Random r = new Random();
+        for(int i=0;i<100;i++){
+            int ii = Math.abs(r.nextInt());
             OrderEntity entity = new OrderEntity();
-            entity.setUserId(i);
+            entity.setUserId(ii);
             entity.setGoodsId(1000L);
             entity.setPayStatus((short)0);
             orderDao.insert(entity);
         }
     }
+
+    public static void main(String[] args) {
+
+        for(int i=0;i<100;i++){
+
+
+        }
+    }
+
 
     /**
      * 列表
