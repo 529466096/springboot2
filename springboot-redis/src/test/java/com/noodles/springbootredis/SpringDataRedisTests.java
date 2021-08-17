@@ -53,12 +53,14 @@ public class SpringDataRedisTests {
 
 	}
 
+	public static int count = 0;
+
 	@Test
 	public void testKeyScan () throws Exception{
 
 		Long start = System.currentTimeMillis();
 
-		String realKey = "{\"applId\":*_*";
+		String realKey = "*";
 		try {
 			redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
 				Set<String> binaryKeys = new HashSet<>();
@@ -68,7 +70,13 @@ public class SpringDataRedisTests {
 
 					Long expire = stringRedisTemplate.getExpire(key);
 
-					System.out.println("key=" + key + ",expire=" + expire);
+					if(expire < 0){
+						count++;
+						//System.out.println("key=" + key + ",expire=" + expire);
+						MySlf4j.textInfo("key={0},expire={1}", key, expire);
+					}
+
+					// System.out.println("key=" + key + ",expire=" + expire);
 
 					//MySlf4j.textInfo("key={0},expire={1}", key, expire);
 				}
@@ -79,6 +87,7 @@ public class SpringDataRedisTests {
 			e.printStackTrace();
 		}
 
+		System.out.println("count == " + count);
 		System.out.println("耗时(秒)：" + (System.currentTimeMillis() - start) / 1000);
 	}
 
@@ -91,10 +100,10 @@ public class SpringDataRedisTests {
 
 	@Test
 	public void getKey(){
-		final String k1 = stringRedisTemplate.opsForValue().get("foo");
+		final String k1 = stringRedisTemplate.opsForValue().get("UAF:APP:USER:USER:ISREALNAME:20210413091239588403");
 		System.out.println(k1);
-		User user = (User) redisTemplate.opsForValue().get("testUser");
-		System.out.println(user.getPassword());
+		/*User user = (User) redisTemplate.opsForValue().get("testUser");
+		System.out.println(user.getPassword());*/
 	}
 
 	@Test

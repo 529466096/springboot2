@@ -9,7 +9,7 @@
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${APP_NAME}] [%thread] [%X{traceId}] %logger{50} - [%class : %method : %line] - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%class : %method : %line] - %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -18,7 +18,7 @@
         <File>${LOG_HOME}/${APP_NAME}.log</File>
         <encoder>
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${APP_NAME}] [%thread] [%X{traceId}] %logger{50} - [%class : %method : %line] - %replace(%msg){'^(.{10000}).*$', '$1'}%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level - [%class : %method : %line] - %msg%n
             </pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
