@@ -57,3 +57,10 @@ spring:
     params: count=countsql
     reasonable: false
     support-methods-arguments: true
+
+  # 以下配置用于自定义配置热部署，可以不设置
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: test/**

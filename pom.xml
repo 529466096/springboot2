@@ -49,6 +49,7 @@
         <module>springboot-demos</module>
         <module>springboot-threadpool-starter</module>
         <module>springboot-shardingsphere</module>
+        <module>springboot-easypoi</module>
     </modules>
 
     <build>
