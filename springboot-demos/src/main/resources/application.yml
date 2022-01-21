@@ -1,7 +1,14 @@
 server:
-  port: 8889
+  port: 8443
   servlet:
     context-path: /springbootdemos
+  # https配置
+  ssl:
+    protocol: TLS
+    key-store: classpath:noodles.keystore
+    key-store-password: noodles
+    key-store-type: jks
+
 #Redis集群配置
 spring:
   redis:

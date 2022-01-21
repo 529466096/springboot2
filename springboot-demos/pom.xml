@@ -102,10 +102,11 @@
             <resource>
                 <targetPath>${project.build.directory}/classes</targetPath>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <filtering>false</filtering>
                 <includes>
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
+                    <include>**/*.keystore</include>
                 </includes>
             </resource>
         </resources>
@@ -113,6 +114,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--spring-boot:run 中文乱码解决-->
+                    <fork>true</fork>
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+                    <mainClass>com.noodles.springbootdemos.SpringbootDemosApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
